@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/license-UN-blue)](LICENSE)
+
+
 # 審議拒否会派／衆議院
 令和8年2月18日現在
 
