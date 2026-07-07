@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>衆参議院 会派名簿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14120f;
+    --panel: #1c1a16;
+    --line: #322e26;
+    --ink: #eae4d6;
+    --ink-dim: #a89f8d;
+    --gold: #c9a24b;
+    --gold-soft: rgba(201,162,75,0.16);
+    --mark: #c9a24b;
+    --mark-ink: #14120f;
+    --radius: 3px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Serif JP", serif;
+    line-height: 1.7;
+    padding-bottom: 4rem;
+  }
+  mono, .mono{ font-family: "DM Mono", monospace; }
+
+  /* ---- 上部固定の検索ヘッダー ---- */
+  header.searchbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(20,18,15,0.92);
+    backdrop-filter: blur(8px) saturate(1.1);
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 1.2rem;
+  }
+  .searchbar-inner{
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .searchbar-title{
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    white-space: nowrap;
+    font-family: "DM Mono", monospace;
+  }
+  .search-wrap{
+    position: relative;
+    flex: 1;
+  }
+  #search{
+    width: 100%;
+    background: #0f0d0a;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    font-family: "Noto Serif JP", serif;
+    font-size: 1rem;
+    padding: 0.6rem 2.2rem 0.6rem 0.9rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  #search:focus{
+    border-color: var(--gold);
+  }
+  #search::placeholder{ color: #5c564a; }
+  #clearBtn{
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    display: none;
+  }
+  #clearBtn:hover{ color: var(--gold); }
+  #hitCount{
+    font-family: "DM Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    white-space: nowrap;
+    min-width: 4.5em;
+    text-align: right;
+  }
+
+  main{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.6rem 1.2rem 0;
+  }
+  .page-title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+    letter-spacing: 0.02em;
+  }
+  .page-sub{
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+    font-family: "DM Mono", monospace;
+    margin-bottom: 2rem;
+  }
+
+  section.house{
+    margin-bottom: 2.6rem;
+  }
+  .house-heading{
+    display:flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
+  }
+  .house-heading h2{
+    font-size: 1.15rem;
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .house-date{
+    font-family: "DM Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+  }
+
+  .party-block{
+    margin-top: 1.4rem;
+  }
+  .party-heading{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .party-heading h3{
+    font-size: 1rem;
+    margin: 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .party-heading .count{
+    font-family: "DM Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+  }
+  .party-source{
+    display:block;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--ink-dim);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+    opacity: 0.7;
+  }
+  .party-source:hover{ color: var(--gold); opacity: 1; }
+
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  thead th{
+    text-align: left;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--ink-dim);
+    font-weight: 400;
+    padding: 0.3rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  tbody td{
+    padding: 0.42rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  tbody tr:hover{
+    background: rgba(255,255,255,0.02);
+  }
+  td.kana{
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+  }
+  tr.hidden{ display: none; }
+
+  mark.hit{
+    background: var(--mark);
+    color: var(--mark-ink);
+    border-radius: 2px;
+    padding: 0 0.1em;
+  }
+
+  .no-hit-house, .no-hit-party{ display: none; }
+
+  #emptyState{
+    display:none;
+    text-align: center;
+    color: var(--ink-dim);
+    font-family: "DM Mono", monospace;
+    font-size: 0.85rem;
+    padding: 3rem 0;
+  }
+
+  footer{
+    max-width: 900px;
+    margin: 2rem auto 0;
+    padding: 1rem 1.2rem;
+    color: var(--ink-dim);
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 560px){
+    .searchbar-title{ display:none; }
+    .page-title{ font-size: 1.25rem; }
+    table{ font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="searchbar">
+  <div class="searchbar-inner">
+    <span class="searchbar-title">検索</span>
+    <div class="search-wrap">
+      <input id="search" type="text" placeholder="氏名・ふりがな・会派名で検索…" autocomplete="off">
+      <button id="clearBtn" aria-label="クリア">×</button>
+    </div>
+    <span id="hitCount"></span>
+  </div>
+</header>
+
+<main>
+  <h1 class="page-title">衆参議院 会派名簿</h1>
+  <div class="page-sub">氏名・ふりがなでの内部検索に対応。データソースは各会派名の下にリンクしています。</div>
+  <div id="listRoot"></div>
+  <div id="emptyState">該当する議員が見つかりません</div>
+</main>
+
+<footer>data source: 衆議院・参議院 公式サイト（魚拓リンク経由）</footer>
+
+<script id="data-json" type="application/json">
+[{"house": "衆議院会派データ", "date": "令和8年2月18日現在", "source": null, "parties": [{"party": "中道改革連合", "source": "https://megalodon.jp/2026-0707-0018-57/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/020kaiha.htm", "members": [{"name": "赤羽 一嘉", "kana": "あかば かずよし"}, {"name": "有田 芳生", "kana": "ありた よしふ"}, {"name": "伊佐 進一", "kana": "いさ しんいち"}, {"name": "泉 健太", "kana": "いずみ けんた"}, {"name": "犬飼 明佳", "kana": "いぬかい あきよし"}, {"name": "浮島 智子", "kana": "うきしま ともこ"}, {"name": "大島 敦", "kana": "おおしま あつし"}, {"name": "大森 江里子", "kana": "おおもり えりこ"}, {"name": "岡本 三成", "kana": "おかもと みつなり"}, {"name": "小川 淳也", "kana": "おがわ じゅんや"}, {"name": "落合 貴之", "kana": "おちあい たかゆき"}, {"name": "河西 宏一", "kana": "かさい こういち"}, {"name": "金子 恵美", "kana": "かねこ えみ"}, {"name": "神谷 裕", "kana": "かみや ひろし"}, {"name": "河野 義博", "kana": "かわの よしひろ"}, {"name": "菊田 真紀子", "kana": "きくた まきこ"}, {"name": "金城 泰邦", "kana": "きんじょう やすくに"}, {"name": "國重 徹", "kana": "くにしげ とおる"}, {"name": "輿水 恵一", "kana": "こしみず けいいち"}, {"name": "後藤 祐一", "kana": "ごとう ゆういち"}, {"name": "近藤 和也", "kana": "こんどう かずや"}, {"name": "斉藤 鉄夫", "kana": "さいとう てつお"}, {"name": "佐藤 英道", "kana": "さとう ひでみち"}, {"name": "重徳 和彦", "kana": "しげとく かずひこ"}, {"name": "階 猛", "kana": "しな たけし"}, {"name": "庄子 賢一", "kana": "しょうじ けんいち"}, {"name": "田嶋 要", "kana": "たじま かなめ"}, {"name": "角田 秀穂", "kana": "つのだ ひでお"}, {"name": "中川 宏昌", "kana": "なかがわ ひろまさ"}, {"name": "中川 康洋", "kana": "なかがわ やすひろ"}, {"name": "長妻 昭", "kana": "ながつま あきら"}, {"name": "中野 洋昌", "kana": "なかの ひろまさ"}, {"name": "西園 勝秀", "kana": "にしぞの かつひで"}, {"name": "西村 智奈美", "kana": "にしむら ちなみ"}, {"name": "沼崎 満子", "kana": "ぬまざき みつこ"}, {"name": "野田 佳彦", "kana": "のだ よしひこ"}, {"name": "野間 健", "kana": "のま たけし"}, {"name": "浜地 雅一", "kana": "はまち まさかず"}, {"name": "原田 直樹", "kana": "はらだ なおき"}, {"name": "平林 晃", "kana": "ひらばやし あきら"}, {"name": "福重 隆浩", "kana": "ふくしげ たかひろ"}, {"name": "山岡 達丸", "kana": "やまおか たつまる"}, {"name": "山崎 正恭", "kana": "やまさき まさやす"}, {"name": "山本 香苗", "kana": "やまもと かなえ"}, {"name": "吉田 宣弘", "kana": "よしだ のぶひろ"}, {"name": "笠 浩史", "kana": "りゅう ひろふみ"}, {"name": "早稲田 ゆき", "kana": "わせだ ゆき"}, {"name": "渡辺 創", "kana": "わたなべ そう"}]}, {"party": "国民民主党", "source": "https://megalodon.jp/2026-0707-0031-37/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/040kaiha.htm", "members": [{"name": "浅野 哲", "kana": "あさの さとし"}, {"name": "飯泉 嘉門", "kana": "いいずみ かもん"}, {"name": "井戸 まさえ", "kana": "いど まさえ"}, {"name": "臼木 秀剛", "kana": "うすき ひでたけ"}, {"name": "岡野 純子", "kana": "おかの じゅんこ"}, {"name": "小竹 凱君", "kana": "おだけ かい"}, {"name": "河井 昭成", "kana": "かわい あきなり"}, {"name": "許斐 亮太郎", "kana": "このみ りょうたろう"}, {"name": "近藤 雅彦", "kana": "こんどう まさひこ"}, {"name": "佐々木 真琴", "kana": "ささき まこと"}, {"name": "鈴木 義弘", "kana": "すずき よしひろ"}, {"name": "高沢 一基", "kana": "たかざわ かずもと"}, {"name": "田中 健", "kana": "たなか けん"}, {"name": "玉木 雄一郎", "kana": "たまき ゆういちろう"}, {"name": "丹野 みどり", "kana": "たんの みどり"}, {"name": "長友 慎治", "kana": "ながとも しんじ"}, {"name": "鍋島 勢理", "kana": "なべしま せり"}, {"name": "西岡 秀子", "kana": "にしおか ひでこ"}, {"name": "西岡 義高", "kana": "にしおか よしたか"}, {"name": "野村 美穂", "kana": "のむら みほ"}, {"name": "橋本 幹彦", "kana": "はしもと みきひこ"}, {"name": "日野 紗里亜", "kana": "ひの さりあ"}, {"name": "深作 ヘスス", "kana": "ふかさく へすす"}, {"name": "福田 徹", "kana": "ふくた とおる"}, {"name": "古川 元久", "kana": "ふるかわ もとひさ"}, {"name": "向山 好一", "kana": "むこやま こういち"}, {"name": "村岡 敏英", "kana": "むらおか としひで"}, {"name": "森 ようすけ", "kana": "もり ようすけ"}]}, {"party": "参政党", "source": "https://megalodon.jp/2026-0707-0033-34/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/050kaiha.htm", "members": [{"name": "青木 ひとみ", "kana": "あおき ひとみ"}, {"name": "石川 勝", "kana": "いしかわ まさる"}, {"name": "伊藤 恵介", "kana": "いとう けいすけ"}, {"name": "川 裕一郎", "kana": "かわ ゆういちろう"}, {"name": "木下 敏之", "kana": "きのした としゆき"}, {"name": "工藤 聖子", "kana": "くどう せいこ"}, {"name": "島村 かおる", "kana": "しまむら かおる"}, {"name": "鈴木 美香", "kana": "すずき みか"}, {"name": "谷 浩一郎", "kana": "たに こういちろう"}, {"name": "豊田 真由子", "kana": "とよた まゆこ"}, {"name": "なかや めぐ", "kana": "なかや めぐ"}, {"name": "牧野 俊一", "kana": "まきの しゅんいち"}, {"name": "吉川 里奈", "kana": "よしかわ りな"}, {"name": "和田 政宗", "kana": "わだ まさむね"}, {"name": "渡辺 藍理", "kana": "わたなべ あいり"}]}, {"party": "チームみらい", "source": "https://megalodon.jp/2026-0707-0035-11/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/060kaiha.htm", "members": [{"name": "宇佐美 登", "kana": "うさみ のぼる"}, {"name": "河合 道雄", "kana": "かわい みちお"}, {"name": "小林 修平", "kana": "こばやし しゅうへい"}, {"name": "須田 英太郎", "kana": "すだ えいたろう"}, {"name": "高山 聡史", "kana": "たかやま さとし"}, {"name": "土橋 章宏", "kana": "どばし あきひろ"}, {"name": "林 拓海", "kana": "はやし たくみ"}, {"name": "古川 あおい", "kana": "ふるかわ あおい"}, {"name": "峰島 侑也", "kana": "みねしま ゆうや"}, {"name": "武藤 かず子", "kana": "むとう かずこ"}, {"name": "山田 瑛理", "kana": "やまだ えり"}]}, {"party": "日本共産党", "source": "https://megalodon.jp/2026-0707-0036-49/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/070kaiha.htm", "members": [{"name": "塩川 鉄也", "kana": "しおかわ てつや"}, {"name": "辰巳 孝太郎", "kana": "たつみ こうたろう"}, {"name": "田村 智子", "kana": "たむら ともこ"}, {"name": "畑野 君枝", "kana": "はたの きみえ"}]}]}, {"house": "参議院会派データ", "date": "令和8年7月05日現在", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "parties": [{"party": "立憲民主党", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "青木 愛", "kana": "あおき あい"}, {"name": "石垣 のりこ［小川 のり子］", "kana": "いしがき のりこ"}, {"name": "石橋 通宏", "kana": "いしばし みちひろ"}, {"name": "泉 房穂", "kana": "いずみ ふさほ"}, {"name": "打越 さく良 ［村木 さく良］", "kana": "うちこし さくら"}, {"name": "小沢 雅仁", "kana": "おざわ まさひと"}, {"name": "鬼木 誠", "kana": "おにき まこと"}, {"name": "勝部 賢志", "kana": "かつべ けんじ"}, {"name": "岸 真紀子", "kana": "きし まきこ"}, {"name": "木戸口 英司", "kana": "きどぐち えいじ"}, {"name": "熊谷 裕人", "kana": "くまがい ひろと"}, {"name": "郡山 りょう［郡山 玲］", "kana": "こおりやま りょう"}, {"name": "古賀 千景", "kana": "こが ちかげ"}, {"name": "古賀 之士", "kana": "こが ゆきひと"}, {"name": "小島 とも子［小島 智子］", "kana": "こじま ともこ"}, {"name": "小西 洋之", "kana": "こにし ひろゆき"}, {"name": "斎藤 嘉隆", "kana": "さいとう よしたか"}, {"name": "塩村 あやか［塩村 文夏］", "kana": "しおむら あやか"}, {"name": "柴 愼一", "kana": "しば しんいち"}, {"name": "杉尾 秀哉", "kana": "すぎお ひでや"}, {"name": "高木 真理", "kana": "たかぎ まり"}, {"name": "田島 麻衣子", "kana": "たじま まいこ"}, {"name": "田名部 匡代", "kana": "たなぶ まさよ"}, {"name": "辻元 清美", "kana": "つじもと きよみ"}, {"name": "徳永 エリ［鈴木 エリ］", "kana": "とくなが えり"}, {"name": "長浜 博行", "kana": "ながはま ひろゆき"}, {"name": "羽田 次郎", "kana": "はた じろう"}, {"name": "広田 一", "kana": "ひろた はじめ"}, {"name": "福士 珠美", "kana": "ふくし ますみ"}, {"name": "牧山 ひろえ［牧山 弘惠］", "kana": "まきやま ひろえ"}, {"name": "三上 えり［川堀 絵里］", "kana": "みかみ えり"}, {"name": "水岡 俊一", "kana": "みずおか しゅんいち"}, {"name": "村田 享子", "kana": "むらた きょうこ"}, {"name": "森 ゆうこ［森 裕子］", "kana": "もり ゆうこ"}, {"name": "森本 真治", "kana": "もりもと しんじ"}, {"name": "山内 佳菜子", "kana": "やまうち かなこ"}, {"name": "横沢 高徳", "kana": "よこさわ たかのり"}, {"name": "吉川 沙織", "kana": "よしかわ さおり"}, {"name": "吉田 忠智", "kana": "よしだ ただとも"}, {"name": "蓮舫［齊藤 蓮舫］", "kana": "れんほう"}]}, {"party": "国民民主党", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "足立 康史", "kana": "あだち やすし"}, {"name": "礒崎 哲史", "kana": "いそざき てつじ"}, {"name": "伊藤 孝恵", "kana": "いとう たかえ"}, {"name": "伊藤 辰夫", "kana": "いとう たつお"}, {"name": "上田 清司", "kana": "うえだ きよし"}, {"name": "牛田 茉友［高橋  茉友］", "kana": "うしだ まゆ"}, {"name": "江原 くみ子［江原 久美子］", "kana": "えはら くみこ"}, {"name": "奥村 祥大", "kana": "おくむら よしひろ"}, {"name": "かごしま 彰宏", "kana": "［籠島 彰宏］かごしま あきひろ"}, {"name": "川合 孝典", "kana": "かわい たかのり"}, {"name": "後藤 斎", "kana": "ごとう ひとし"}, {"name": "小林 さやか［中山 さやか］", "kana": "こばやし さやか"}, {"name": "榛葉 賀津也", "kana": "しんば かづや"}, {"name": "竹詰 仁", "kana": "たけづめ ひとし"}, {"name": "田村 まみ［田村 麻美］", "kana": "たむら まみ"}, {"name": "堂込 麻紀子", "kana": "どうごみ まきこ"}, {"name": "庭田 幸恵", "kana": "にわた ゆきえ"}, {"name": "芳賀 道也", "kana": "はが みちや"}, {"name": "浜口 誠", "kana": "はまぐち まこと"}, {"name": "浜野 喜史", "kana": "はまの よしふみ"}, {"name": "原田 秀一", "kana": "はらだ ひでかず"}, {"name": "平戸 航太", "kana": "ひらど こうた"}, {"name": "舟山 康江", "kana": "ふなやま やすえ"}, {"name": "水野 孝一", "kana": "みずの こういち"}, {"name": "山田 吉彦", "kana": "やまだ よしひこ"}]}, {"party": "公明党", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "秋野 公造", "kana": "あきの こうぞう"}, {"name": "石川 博崇", "kana": "いしかわ ひろたか"}, {"name": "伊藤 孝江", "kana": "いとう たかえ"}, {"name": "上田 勇", "kana": "うえだ いさむ"}, {"name": "川村 雄大", "kana": "かわむら ゆうだい"}, {"name": "窪田 哲也", "kana": "くぼた てつや"}, {"name": "佐々木 雅文", "kana": "ささき まさふみ"}, {"name": "里見 隆治", "kana": "さとみ りゅうじ"}, {"name": "下野 六太", "kana": "しもの ろくた"}, {"name": "杉 久武", "kana": "すぎ ひさたけ"}, {"name": "高橋 光男", "kana": "たかはし みつお"}, {"name": "竹内 真二", "kana": "たけうち しんじ"}, {"name": "竹谷 とし子", "kana": "［菊地 とし子］たけや としこ"}, {"name": "谷合 正明", "kana": "たにあい まさあき"}, {"name": "司 隆史", "kana": "つかさ たかし"}, {"name": "西田 実仁", "kana": "にしだ まこと"}, {"name": "原田 大二郎", "kana": "はらだ だいじろう"}, {"name": "平木 大作", "kana": "ひらき だいさく"}, {"name": "三浦 信祐", "kana": "みうら のぶひろ"}, {"name": "宮崎 勝", "kana": "みやざき まさる"}, {"name": "横山 信一", "kana": "よこやま しんいち"}]}, {"party": "参政党", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "安達 悠司", "kana": "あだち ゆうじ"}, {"name": "安藤 裕", "kana": "あんどう ひろし"}, {"name": "岩本 麻奈［富田 麻奈］", "kana": "いわもと まな"}, {"name": "梅村 みずほ", "kana": "うめむら みずほ"}, {"name": "大津 力", "kana": "おおつ つとむ"}, {"name": "神谷 宗幣", "kana": "かみや そうへい"}, {"name": "後藤 翔太", "kana": "ごとう しょうた"}, {"name": "櫻井 祥子", "kana": "さくらい しょうこ"}, {"name": "塩入 清香", "kana": "しおいり さやか"}, {"name": "杉本 純子", "kana": "すぎもと じゅんこ"}, {"name": "中田 優子", "kana": "なかだ ゆうこ"}, {"name": "初鹿野 裕樹", "kana": "はじかの ひろき"}, {"name": "松田 学", "kana": "まつだ まなぶ"}, {"name": "宮出 千慧［高森 千慧］", "kana": "みやで ちさと"}, {"name": "山中 泉", "kana": "やまなか せん"}]}, {"party": "日本共産党", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "岩渕 友", "kana": "いわぶち とも"}, {"name": "吉良 よし子［吉良 佳子］", "kana": "きら よしこ"}, {"name": "小池 晃", "kana": "こいけ あきら"}, {"name": "白川 容子", "kana": "しらかわ ようこ"}, {"name": "大門 実紀史", "kana": "だいもん みきし"}, {"name": "仁比 聡平", "kana": "にひ そうへい"}, {"name": "山添 拓", "kana": "やまぞえ たく"}]}, {"party": "チームみらい", "source": "https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm", "members": [{"name": "安野 貴博", "kana": "あんの たかひろ"}, {"name": "尾辻 朋実［末原 朋実］", "kana": "おつじ ともみ"}]}]}]
+</script>
+
+<script>
+(function(){
+  const data = JSON.parse(document.getElementById('data-json').textContent);
+  const root = document.getElementById('listRoot');
+  const searchInput = document.getElementById('search');
+  const clearBtn = document.getElementById('clearBtn');
+  const hitCount = document.getElementById('hitCount');
+  const emptyState = document.getElementById('emptyState');
+
+  // ---- レンダリング ----
+  data.forEach((house, hIdx) => {
+    const section = document.createElement('section');
+    section.className = 'house';
+    section.dataset.house = hIdx;
+
+    const heading = document.createElement('div');
+    heading.className = 'house-heading';
+    heading.innerHTML = `<h2>${escapeHtml(house.house)}</h2><span class="house-date">${escapeHtml(house.date || '')}</span>`;
+    section.appendChild(heading);
+
+    house.parties.forEach((party, pIdx) => {
+      const block = document.createElement('div');
+      block.className = 'party-block';
+      block.dataset.party = pIdx;
+
+      const pHeading = document.createElement('div');
+      pHeading.className = 'party-heading';
+      pHeading.innerHTML = `<h3 class="party-name">${escapeHtml(party.party)}</h3><span class="count">${party.members.length}名</span>`;
+      block.appendChild(pHeading);
+
+      if(party.source){
+        const src = document.createElement('a');
+        src.className = 'party-source';
+        src.href = party.source;
+        src.target = '_blank';
+        src.rel = 'noopener noreferrer';
+        src.textContent = 'データソース ↗';
+        block.appendChild(src);
+      }
+
+      const table = document.createElement('table');
+      table.innerHTML = `<thead><tr><th style="width:55%">氏名</th><th>ふりがな</th></tr></thead>`;
+      const tbody = document.createElement('tbody');
+
+      party.members.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.dataset.name = m.name;
+        tr.dataset.kana = m.kana;
+        tr.dataset.party = party.party;
+        const tdName = document.createElement('td');
+        tdName.className = 'name';
+        tdName.textContent = m.name;
+        const tdKana = document.createElement('td');
+        tdKana.className = 'kana';
+        tdKana.textContent = m.kana;
+        tr.appendChild(tdName);
+        tr.appendChild(tdKana);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      block.appendChild(table);
+      section.appendChild(block);
+    });
+
+    root.appendChild(section);
+  });
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, c => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+    }[c]));
+  }
+
+  function highlight(text, query){
+    if(!query) return escapeHtml(text);
+    const escaped = escapeHtml(text);
+    const q = escapeHtml(query);
+    // 大文字小文字を無視した単純な部分一致ハイライト
+    const idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if(idx === -1) return escaped;
+    const before = escapeHtml(text.slice(0, idx));
+    const match = escapeHtml(text.slice(idx, idx + query.length));
+    const after = escapeHtml(text.slice(idx + query.length));
+    return `${before}<mark class="hit">${match}</mark>${after}`;
+  }
+
+  function normalize(str){
+    // 全角/半角スペース除去して比較しやすくする
+    return str.replace(/[\s\u3000]/g, '').toLowerCase();
+  }
+
+  function runSearch(){
+    const raw = searchInput.value.trim();
+    clearBtn.style.display = raw ? 'block' : 'none';
+
+    let visibleCount = 0;
+
+    root.querySelectorAll('section.house').forEach(section => {
+      let sectionHasVisible = false;
+
+      section.querySelectorAll('.party-block').forEach(block => {
+        let partyHasVisible = false;
+        const partyName = block.querySelector('.party-name').textContent;
+
+        block.querySelectorAll('tbody tr').forEach(tr => {
+          const name = tr.dataset.name;
+          const kana = tr.dataset.kana;
+          const tdName = tr.querySelector('td.name');
+          const tdKana = tr.querySelector('td.kana');
+
+          if(!raw){
+            tr.classList.remove('hidden');
+            tdName.innerHTML = escapeHtml(name);
+            tdKana.innerHTML = escapeHtml(kana);
+            partyHasVisible = true;
+            visibleCount++;
+            return;
+          }
+
+          const q = normalize(raw);
+          const matches =
+            normalize(name).includes(q) ||
+            normalize(kana).includes(q) ||
+            normalize(partyName).includes(q);
+
+          if(matches){
+            tr.classList.remove('hidden');
+            tdName.innerHTML = highlight(name, raw);
+            tdKana.innerHTML = highlight(kana, raw);
+            partyHasVisible = true;
+            visibleCount++;
+          } else {
+            tr.classList.add('hidden');
+            tdName.innerHTML = escapeHtml(name);
+            tdKana.innerHTML = escapeHtml(kana);
+          }
+        });
+
+        block.style.display = partyHasVisible ? '' : 'none';
+        if(partyHasVisible) sectionHasVisible = true;
+      });
+
+      section.style.display = sectionHasVisible ? '' : 'none';
+    });
+
+    if(raw){
+      hitCount.textContent = `${visibleCount}件`;
+    } else {
+      hitCount.textContent = '';
+    }
+    emptyState.style.display = (raw && visibleCount === 0) ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', runSearch);
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    runSearch();
+    searchInput.focus();
+  });
+
+  runSearch();
+})();
+</script>
+</body>
+</html>
