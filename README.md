@@ -3,7 +3,8 @@
 
 
 # 衆議院会派データ
-第221回（特別会）<br>令和8年2月18日招集
+第221回（特別会）<br>
+令和8年2月18日招集
 
 ## 中道改革連合
 [データソース](https://megalodon.jp/2026-0707-0018-57/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/020kaiha.htm) 
@@ -94,7 +95,8 @@
 | 村岡　敏英 | むらおか　としひで |
 | 森　ようすけ | もり　ようすけ |
 
-●参政党
+
+##参政党
 [データソース](https://megalodon.jp/2026-0707-0033-34/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/050kaiha.htm) 
 
 | 氏名 | ふりがな | 
@@ -115,7 +117,8 @@
 | 和田　政宗 | わだ　まさむね |
 | 渡辺　藍理 | わたなべ　あいり |
 
-●チームみらい
+
+##チームみらい
 [データソース](https://megalodon.jp/2026-0707-0035-11/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/060kaiha.htm) 
 
 | 氏名 | ふりがな | 
@@ -132,7 +135,8 @@
 | 武藤　かず子 | むとう　かずこ |
 | 山田　瑛理 | やまだ　えり |
 
-●日本共産党
+
+##日本共産党
 [データソース](https://megalodon.jp/2026-0707-0036-49/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/070kaiha.htm) 
 
 | 氏名 | ふりがな | 
@@ -146,9 +150,10 @@
 # 参議院会派データ
 第221回（特別会）<br>
 令和8年2月18日招集
-[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
 
 ## 立憲民主党
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 青木　愛 | あおき　あい |
@@ -194,6 +199,8 @@
 
 
 ## 国民民主党
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 足立　康史 | あだち　やすし |
@@ -224,6 +231,8 @@
 
 
 ## 公明党
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 秋野　公造 | あきの　こうぞう |
@@ -250,6 +259,8 @@
 
 
 ## 参政党
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 安達　悠司 | あだち　ゆうじ |
@@ -270,6 +281,8 @@
 
 
 ## 日本共産党
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 岩渕　友 | いわぶち　とも |
@@ -282,6 +295,8 @@
 
 
 ## チームみらい
+[データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
+
 | 氏名 | ふりがな | 
 | :--- | :--- |
 | 安野　貴博 | あんの　たかひろ |
