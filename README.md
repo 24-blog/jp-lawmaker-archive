@@ -3,6 +3,7 @@
 
 
 # 衆議院会派データ
+令和8年2月18日招集<br>
 令和8年2月18日現在
 
 ## 中道改革連合
@@ -144,6 +145,7 @@
 
 
 # 参議院会派データ
+令和8年2月18日招集<br>
 令和8年7月05日現在
 [データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
 
