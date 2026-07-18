@@ -1,7 +1,6 @@
 [![License](https://img.shields.io/github/license/24-blog/jp-lawmaker-archive)](LICENSE)
 
 
-
 # 衆議院会派データ
 第221回（特別会）<br>
 令和8年2月18日招集
@@ -96,7 +95,7 @@
 | 森　ようすけ | もり　ようすけ |
 
 
-##参政党
+## 参政党
 [データソース](https://megalodon.jp/2026-0707-0033-34/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/050kaiha.htm) 
 
 | 氏名 | ふりがな | 
@@ -118,7 +117,7 @@
 | 渡辺　藍理 | わたなべ　あいり |
 
 
-##チームみらい
+## チームみらい
 [データソース](https://megalodon.jp/2026-0707-0035-11/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/060kaiha.htm) 
 
 | 氏名 | ふりがな | 
@@ -136,7 +135,7 @@
 | 山田　瑛理 | やまだ　えり |
 
 
-##日本共産党
+## 日本共産党
 [データソース](https://megalodon.jp/2026-0707-0036-49/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/070kaiha.htm) 
 
 | 氏名 | ふりがな | 
