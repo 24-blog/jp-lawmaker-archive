@@ -3,7 +3,7 @@
 
 
 # 衆議院会派データ
-令和8年2月18日招集
+第221回（特別会）<br>令和8年2月18日招集
 
 ## 中道改革連合
 [データソース](https://megalodon.jp/2026-0707-0018-57/https://www.shugiin.go.jp:443/internet/itdb_annai.nsf/html/statics/syu/020kaiha.htm) 
@@ -144,6 +144,7 @@
 
 
 # 参議院会派データ
+第221回（特別会）<br>
 令和8年2月18日招集
 [データソース](https://megalodon.jp/2026-0707-0016-15/https://www.sangiin.go.jp:443/japanese/joho1/kousei/giin/221/giinmei.htm) 
 
