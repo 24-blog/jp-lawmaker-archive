@@ -300,3 +300,8 @@
 | :--- | :--- |
 | 安野　貴博 | あんの　たかひろ |
 | 尾辻　朋実［末原　朋実］ | おつじ　ともみ |
+
+
+> [!WARNING]
+> Code: MIT license<br>
+Data & Textual commentary: Public domain
