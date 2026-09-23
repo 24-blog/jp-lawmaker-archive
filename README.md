@@ -303,4 +303,4 @@
 
 
 ⚠️COPYRIGHT<br>
-Data: Public domain<br>Text: Public domain
+Data: Public domain<br>Text: CC0 1.0 Universal
