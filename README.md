@@ -303,4 +303,4 @@
 
 
 ⚠️COPYRIGHT<br>
-Data: Public domain<br>Textual commentary: Public domain
+Data: Public domain<br>Text: Public domain
