@@ -303,4 +303,6 @@
 
 
 ⚠️COPYRIGHT<br>
-Data: Public domain<br>Text: CC0 1.0 Universal
+Data: Public domain<br>Text: 
+
+All non-code text authored by the repository owner is licensed under CC0 1.0 Universal. (Data: Public domain)
