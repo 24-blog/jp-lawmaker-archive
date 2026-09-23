@@ -302,5 +302,5 @@
 | 尾辻　朋実［末原　朋実］ | おつじ　ともみ |
 
 
-> [!COPYRIGHT]
-> Data: Public domain<br>Textual commentary: Public domain
+⚠️COPYRIGHT
+Data: Public domain<br>Textual commentary: Public domain
